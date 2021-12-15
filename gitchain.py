@@ -70,7 +70,7 @@ def main():
                 break
 
         if (error):
-            print("Chain is broken")
+            print("Chain is broken in", i-1)
         else:
             print("Chain is correct")
 
