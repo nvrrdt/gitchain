@@ -17,8 +17,28 @@ def main():
     
     # Argument selection
     if args.create_chain:
+        # Get this git output
         output = subprocess.getoutput('git log -p')
-        print(output)
+
+        # Split the output between 'commit' (including)
+        result = []
+        one_commit = []
+        for line in output.splitlines():
+            if line.startswith('commit'):
+                if not result and not one_commit:
+                    one_commit.append(line)
+                elif one_commit:
+                    result.append(one_commit)
+                    one_commit.clear()
+                    one_commit.append(line)
+            else:
+                one_commit.append(line)
+        result.append(one_commit)
+
+        print(result)
+
+        # Create the json to store the results with the prev_hash and save thes json's
+
     elif args.verify_chain:
         print("test")
 
