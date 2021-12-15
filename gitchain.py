@@ -44,7 +44,7 @@ def main():
         if not os.path.exists('./chain'):
             os.makedirs('./chain')
         
-        count = 0
+        count = 1
         for i, filepath in enumerate(sorted(glob.glob(os.path.join('./chain', '*'))), start=1):
             count = i+1
 
