@@ -55,16 +55,24 @@ def main():
             ph = sha256((json.dumps(j)).encode('utf-8')).hexdigest()
 
     elif args.verify_chain:
+        error = False
+
         for i, filepath in enumerate(sorted(glob.glob(os.path.join('./chain', '*'))), start=1):
             with open(filepath) as f:
                 j = json.load(f)
 
-            # content = json.dumps(j)            
-            # print(content)
-            print(i)
+            if i == 1 and j['prev_hash'] == 'g':
+                ph = sha256((json.dumps(j)).encode('utf-8')).hexdigest()
+            elif j['prev_hash'] == ph:
+                ph = sha256((json.dumps(j)).encode('utf-8')).hexdigest()
+            else:
+                error = True
+                break
 
-            if j['prev_hash'] == 'g':
-                print(json.dumps(j['prev_hash']), i)
+        if (error):
+            print("Chain is broken")
+        else:
+            print("Chain is correct")
 
 if __name__ == '__main__':
     try:
