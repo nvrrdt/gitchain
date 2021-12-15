@@ -3,6 +3,7 @@ import sys
 import os
 import subprocess
 from pathlib import Path
+import json
 
 def main():
     # Initialize parser
@@ -35,9 +36,18 @@ def main():
                 one_commit.append(line)
         result.append(one_commit)
 
-        print(result)
+        # Create chain folder
+        Path("./chain").mkdir(parents=True, exist_ok=True)
 
         # Create the json to store the results with the prev_hash and save thes json's
+        ph = "g"
+        for i, p in enumerate(result, start=1):
+            j = {"patch": p, "prev_hash": ph}
+    
+            file_name = '{0:08d}'.format(i)
+            f = open('./chain/' + file_name, 'w+')
+            f.write(json.dumps(j))
+            f.close()
 
     elif args.verify_chain:
         print("test")
