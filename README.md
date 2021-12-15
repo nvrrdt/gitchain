@@ -13,8 +13,8 @@ I don't know if this is useful or that it even exists, but I liked coding it.
 ### How to use?
 
 - ```'python3 gitchain.py -c' or 'python3 gitchain.py --create-chain'```  
-Creation of the json's in the chain directory and each json comprises a git patch and the prev_hash.
+Creation of the json's in the chain directory and each json comprises of a git patch and the prev_hash.
 - ```'python3 gitchain.py -v' or 'python3 gitchain.py --verify-chain'```  
 Each prev_hash links to the hash of the previous json and this chain is being verified for correctness.
 - ```'python3 gitchain.py -o' or 'python3 gitchain.py --compare-chains'```  
-Comparison of the prev_hash'es of two json's.  
+Comparison of the prev_hash'es of two gitchain's.  
