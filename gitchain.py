@@ -49,7 +49,7 @@ def main():
             count = i+1
 
         # Create chain subfolders
-        if not os.path.exists('./chain/' + str(count+1)):
+        if not os.path.exists('./chain/' + str(count)):
             os.makedirs('./chain/' + str(count))
         
 
