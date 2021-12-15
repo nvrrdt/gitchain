@@ -1,6 +1,7 @@
 import argparse
 import sys
 import os
+import glob
 import subprocess
 from pathlib import Path
 import json
@@ -22,20 +23,21 @@ def main():
         # Get this git output
         output = subprocess.getoutput('git log -p')
 
+        #print(output)
+
         # Split the output between 'commit' (including)
         result = []
-        one_commit = []
         for line in output.splitlines():
             if line.startswith('commit'):
-                if not result and not one_commit:
-                    one_commit.append(line)
-                elif one_commit:
-                    result.append(one_commit)
-                    one_commit.clear()
-                    one_commit.append(line)
+                l = []
+                l.append(line)  
+                if l:
+                    result.append(l)
             else:
-                one_commit.append(line)
-        result.append(one_commit)
+                l.append(line)
+
+        # Reverse the array
+        result.reverse()
 
         # Create chain folder
         Path("./chain").mkdir(parents=True, exist_ok=True)
@@ -53,7 +55,16 @@ def main():
             ph = sha256((json.dumps(j)).encode('utf-8')).hexdigest()
 
     elif args.verify_chain:
-        print("test")
+        for i, filepath in enumerate(sorted(glob.glob(os.path.join('./chain', '*'))), start=1):
+            with open(filepath) as f:
+                j = json.load(f)
+
+            # content = json.dumps(j)            
+            # print(content)
+            print(i)
+
+            if j['prev_hash'] == 'g':
+                print(json.dumps(j['prev_hash']), i)
 
 if __name__ == '__main__':
     try:
