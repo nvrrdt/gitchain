@@ -4,6 +4,7 @@ import os
 import subprocess
 from pathlib import Path
 import json
+from hashlib import sha256
 
 def main():
     # Initialize parser
@@ -48,6 +49,8 @@ def main():
             f = open('./chain/' + file_name, 'w+')
             f.write(json.dumps(j))
             f.close()
+
+            ph = sha256((json.dumps(j)).encode('utf-8')).hexdigest()
 
     elif args.verify_chain:
         print("test")
